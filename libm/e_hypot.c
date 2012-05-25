@@ -43,7 +43,7 @@
  * 	than 1 ulps (units in the last place) 
  */
 
-#include "fdlibm.h"
+#include <math.h>
 
 #ifdef __STDC__
 	double __ieee754_hypot(double x, double y)

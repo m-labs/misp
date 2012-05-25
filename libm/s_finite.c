@@ -16,7 +16,7 @@
  * no branching!
  */
 
-#include "fdlibm.h"
+#include <math.h>
 
 #ifdef __STDC__
 	int finite(double x)

@@ -1,4 +1,5 @@
-include $(M2DIR)/software/common.mak
+MISPDIR=..
+include $(MISPDIR)/common.mak
 
 CFLAGS+=-D_IEEE_LIBM -D_REENTRANT
 

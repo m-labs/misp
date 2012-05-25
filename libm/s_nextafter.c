@@ -18,7 +18,7 @@
  *   Special cases:
  */
 
-#include "fdlibm.h"
+#include <math.h>
 
 #ifdef __STDC__
 	double nextafter(double x, double y)

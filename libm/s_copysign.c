@@ -17,7 +17,7 @@
  * with the sign bit of y.
  */
 
-#include "fdlibm.h"
+#include <math.h>
 
 #ifdef __STDC__
 	double copysign(double x, double y)
