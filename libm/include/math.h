@@ -10,6 +10,9 @@
  * ====================================================
  */
 
+#ifndef __MATH_H
+#define __MATH_H
+
 /* Sometimes it's necessary to define __LITTLE_ENDIAN explicitly
    but these catch some common cases. */
 
@@ -73,6 +76,7 @@ struct exception {
 };
 
 #define	HUGE		MAXFLOAT
+#define HUGE_VAL	(__builtin_huge_val())
 
 /* 
  * set X_TLOSS = pi*2**52, which is possibly defined in <values.h>
@@ -214,3 +218,5 @@ extern double __kernel_sin __P((double,double,int));
 extern double __kernel_cos __P((double,double));
 extern double __kernel_tan __P((double,double,int));
 extern int    __kernel_rem_pio2 __P((double*,double*,int,int,int,const int*));
+
+#endif /* __MATH_H */
