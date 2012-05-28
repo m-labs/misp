@@ -53,9 +53,7 @@ static void test_lua(void)
 	lua_State *L;
 	
 	L = lua_newstate(stupid_alloc, NULL); // TODO: use luaL_newstate from lauxlib
-	luaopen_base(L); // TODO: consider luaL_openlibs from linit
-	luaopen_coroutine(L);
-	luaopen_table(L);
+	luaL_openlibs(L);
 	luaL_dostring(L, "for i=10,1,-1 do print(i) end\n");
 	
 	lua_close(L);

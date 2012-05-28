@@ -1,7 +1,7 @@
 MISPDIR=.
 include $(MISPDIR)/common.mak
 
-OBJECTS=crt0.o isr.o main.o
+OBJECTS=crt0.o isr.o luainit.o main.o
 
 CFLAGS+=-I$(MISPDIR)/libm/include -I$(LUADIR)/src
 
