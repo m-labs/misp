@@ -4,10 +4,10 @@ include $(MISPDIR)/common.mak
 
 CFLAGS+=-I. -DLUA_IEEEENDIAN=1 -Dstrcoll=strcmp
 
-OBJECTS=lapi.o lcode.o lctype.o ldebug.o ldo.o ldump.o lfunc.o lgc.o llex.o lmem.o lobject.o lopcodes.o lparser.o lstate.o lstring.o ltable.o ltm.o lundump.o lvm.o lzio.o lbaselib.o lbitlib.o lcorolib.o ldblib.o lmathlib.o lstrlib.o ltablib.o loadlib.o linit.o
+OBJECTS=lapi.o lcode.o lctype.o ldebug.o ldo.o ldump.o lfunc.o lgc.o llex.o lmem.o lobject.o lopcodes.o lparser.o lstate.o lstring.o ltable.o ltm.o lundump.o lvm.o lzio.o lbaselib.o lbitlib.o lcorolib.o ldblib.o lmathlib.o lstrlib.o ltablib.o loadlib.o linit.o lauxlib.o
 
 # later:
-#OBJECTS+=lauxlib.o liolib.o
+#OBJECTS+=liolib.o
 
 all: liblua.a
 
