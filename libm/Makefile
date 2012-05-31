@@ -13,7 +13,6 @@ e_cosh.o   e_jn.o        e_scalb.o      s_asinh.o     s_fabs.o      s_log1p.o   
 e_exp.o    e_lgamma.o    e_sinh.o       s_atan.o      s_finite.o    s_logb.o         s_sin.o          w_cosh.o   w_jn.o       w_sinh.o \
 e_fmod.o   e_lgamma_r.o  e_sqrt.o       s_cbrt.o      s_floor.o     s_matherr.o      s_tan.o          w_exp.o    w_lgamma.o   w_sqrt.o
 
-
 all: libm.a
 
 # pull in dependency info for *existing* .o files
@@ -22,6 +21,9 @@ all: libm.a
 libm.a: $(OBJECTS)
 	$(AR) clr libm.a $(OBJECTS)
 	$(RANLIB) libm.a
+
+%.o: %.c
+	$(compile-dep)
 
 .PHONY: clean
 

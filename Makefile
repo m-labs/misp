@@ -26,6 +26,9 @@ misp.elf: linker.ld $(OBJECTS) libs
 		--start-group -lbase -lcompiler_rt -lm -lglue -llua --end-group
 	chmod -x $@
 
+%.o: %.c
+	$(compile-dep)
+
 libs:
 	make -C $(MISPDIR)/libm
 	make -C $(MISPDIR)/libglue

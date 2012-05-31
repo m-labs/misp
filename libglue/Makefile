@@ -3,7 +3,6 @@ include $(MISPDIR)/common.mak
 
 OBJECTS=file.o getenv.o
 
-
 all: libglue.a
 
 # pull in dependency info for *existing* .o files
@@ -12,6 +11,9 @@ all: libglue.a
 libglue.a: $(OBJECTS)
 	$(AR) clr libglue.a $(OBJECTS)
 	$(RANLIB) libglue.a
+
+%.o: %.c
+	$(compile-dep)
 
 .PHONY: clean
 

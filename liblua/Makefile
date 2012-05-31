@@ -1,5 +1,4 @@
 MISPDIR=..
-SRCDIR=$(LUADIR)/src/
 include $(MISPDIR)/common.mak
 
 CFLAGS+=-I. -DLUA_IEEEENDIAN=1 -Dstrcoll=strcmp
@@ -17,6 +16,9 @@ all: liblua.a
 liblua.a: $(OBJECTS)
 	$(AR) clr liblua.a $(OBJECTS)
 	$(RANLIB) liblua.a
+
+%.o: $(LUADIR)/src/%.c
+	$(compile-dep)
 
 .PHONY: clean
 
