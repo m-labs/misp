@@ -29,6 +29,7 @@ misp.elf: linker.ld $(OBJECTS) libs
 	$(compile-dep)
 
 libs:
+	set -e; \
 	for lib in $(OURLIBS); do \
 		make -C $(MISPDIR)/lib$$lib; \
 	done
