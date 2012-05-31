@@ -2,6 +2,7 @@ MISPDIR=.
 include $(MISPDIR)/common.mak
 
 OBJECTS=crt0.o isr.o luainit.o main.o
+OURLIBS=m yaffs2 glue lua
 
 CFLAGS+=-I$(MISPDIR)/libm/include -I$(LUADIR)/src
 
@@ -20,24 +21,22 @@ misp.elf: linker.ld $(OBJECTS) libs
 	$(LD) $(LDFLAGS) -T $< -N -o $@ $(OBJECTS) \
 		-L$(M2DIR)/software/libbase \
 		-L$(CRTDIR) \
-		-L$(MISPDIR)/libm \
-		-L$(MISPDIR)/libglue \
-		-L$(MISPDIR)/liblua \
-		--start-group -lbase -lcompiler_rt -lm -lglue -llua --end-group
+		$(addprefix -L$(MISPDIR)/lib,$(OURLIBS)) \
+		--start-group -lbase -lcompiler_rt $(addprefix -l,$(OURLIBS)) --end-group
 	chmod -x $@
 
 %.o: %.c
 	$(compile-dep)
 
 libs:
-	make -C $(MISPDIR)/libm
-	make -C $(MISPDIR)/libglue
-	make -C $(MISPDIR)/liblua
+	for lib in $(OURLIBS); do \
+		make -C $(MISPDIR)/lib$$lib; \
+	done
 
 clean:
 	rm -f $(OBJECTS) $(OBJECTS:.o=.d) misp.elf misp.bin .*~ *~
-	make -C $(MISPDIR)/libm clean
-	make -C $(MISPDIR)/libglue clean
-	make -C $(MISPDIR)/liblua clean
+	for lib in $(OURLIBS); do \
+		make -C $(MISPDIR)/lib$$lib clean; \
+	done
 
 .PHONY: clean libs flash
