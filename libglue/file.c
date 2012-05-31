@@ -1,8 +1,50 @@
 #include <stdio.h>
+#include <errno.h>
 #include <stdarg.h>
 #include <console.h>
 
+#include <yaffs_osglue.h>
+
 /* TODO */
+
+unsigned int yaffs_trace_mask;
+
+void yaffsfs_Lock(void)
+{
+}
+
+void yaffsfs_Unlock(void)
+{
+}
+
+u32 yaffsfs_CurrentTime(void)
+{
+	return 0;
+}
+
+void yaffsfs_SetError(int err)
+{
+	errno = err;
+}
+
+int yaffsfs_GetLastError(void)
+{
+	return errno;
+}
+
+void *yaffsfs_malloc(size_t size)
+{
+	return NULL;
+}
+
+void yaffsfs_free(void *ptr)
+{
+}
+
+void yaffs_bug_fn(const char *file_name, int line_no)
+{
+}
+
 
 FILE *stdin;
 FILE *stdout;
