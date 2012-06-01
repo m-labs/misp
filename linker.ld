@@ -48,7 +48,8 @@ SECTIONS
 		*(COMMON)
 		. = ALIGN(4);
 		_ebss = .;
-		_end = .;
+		. = ALIGN(8);
+		_heapstart = .;
 	} > sdram
 }
 
