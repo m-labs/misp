@@ -40,4 +40,7 @@ clean:
 		make -C $(MISPDIR)/lib$$lib clean; \
 	done
 
-.PHONY: clean libs
+netboot: misp.bin
+	cp misp.bin /var/lib/tftpboot/boot.bin
+
+.PHONY: clean libs netboot
