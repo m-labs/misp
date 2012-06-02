@@ -21,7 +21,6 @@ int vasprintf(char **strp, const char *fmt, va_list ap)
 		va_end(aq);
 		if(len < 0) {
 			free(*strp);
-			
 			return len;
 		}
 		if(len < alloclen)
