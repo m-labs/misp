@@ -187,7 +187,11 @@ FILE *fopen(const char *path, const char *mode)
 
 int fclose(FILE *fd)
 {
-	return yaffs_close(*(int *)fd);
+	int r;
+	
+	r = yaffs_close(*(int *)fd);
+	free(fd);
+	return r;
 }
 
 int fprintf(FILE *stream, const char *format, ...)
@@ -306,5 +310,18 @@ int feof(FILE *stream)
 
 FILE *freopen(const char *path, const char *mode, FILE *stream)
 {
-	return NULL;
+	FILE *newfd;
+	
+	if(is_std_stream(stream))
+		return NULL; /* unsupported */
+	
+	yaffs_close(*(int *)stream);
+	newfd = fopen(path, mode);
+	if(newfd == NULL) {
+		free(stream);
+		return NULL;
+	}
+	*(int *)stream = *(int *)newfd;
+	free(newfd);
+	return stream;
 }
