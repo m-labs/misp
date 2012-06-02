@@ -1,19 +1,14 @@
 /*
-* Based on Lua 5.2.0 linit.c, see Copyright Notice in lua.h
-*/
+ * Based on Lua 5.2.0 linit.c, see Copyright Notice in lua.h
+ */
 
-
-#define linit_c
-#define LUA_LIB
-
-#include "lua.h"
-
-#include "lualib.h"
-#include "lauxlib.h"
+#include <lua.h>
+#include <lualib.h>
+#include <lauxlib.h>
+#include <lfs.h>
 
 /*
- * these libs are loaded by lua.c and are readily available to any Lua
- * program
+ * these libs are readily available to any Lua program
  */
 static const luaL_Reg loadedlibs[] = {
 	{"_G", luaopen_base},
@@ -25,6 +20,7 @@ static const luaL_Reg loadedlibs[] = {
 	{LUA_BITLIBNAME, luaopen_bit32},
 	{LUA_MATHLIBNAME, luaopen_math},
 	{LUA_DBLIBNAME, luaopen_debug},
+	{"lfs", luaopen_lfs},
 	{NULL, NULL}
 };
 
