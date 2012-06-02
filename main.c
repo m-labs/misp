@@ -5,6 +5,8 @@
 #include <irq.h>
 #include <uart.h>
 
+#include <glue.h>
+
 #include <lua.h>
 #include <lauxlib.h>
 #include <lualib.h>
@@ -27,6 +29,7 @@ int main()
 	irq_setie(1);
 	uart_init();
 	mm_initialize(&_heapstart, 64*1024*1024);
+	fs_init();
 	
 	printf("Hello World\n");
 	test_lua();
