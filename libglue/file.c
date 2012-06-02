@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <stdarg.h>
+#include <asprintf.h>
 #include <console.h>
 
 #include <yaffsfs.h>
@@ -191,16 +192,25 @@ int fclose(FILE *fd)
 
 int fprintf(FILE *stream, const char *format, ...)
 {
-	/* TODO */
 	va_list args;
 	int len;
-	char outbuf[256];
+	char *outbuf;
 
 	va_start(args, format);
-	len = vscnprintf(outbuf, sizeof(outbuf), format, args);
+	len = vasprintf(&outbuf, format, args);
 	va_end(args);
-	outbuf[len] = 0;
-	putsnonl(outbuf);
+	if(len < 0)
+		return len;
+	
+	if(is_std_stream(stream)) {
+		putsnonl(outbuf);
+		free(outbuf);
+	} else {
+		int fd = *(int *)stream;
+		
+		len = yaffs_write(fd, outbuf, len);
+		free(outbuf);
+	}
 	return len;
 }
 
