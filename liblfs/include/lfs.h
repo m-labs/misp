@@ -9,6 +9,7 @@
 #ifndef __LFS_H
 #define __LFS_H
 
+int luaopen_iolight(lua_State *L);
 int luaopen_lfs(lua_State *L);
 
 #endif /* __LFS_H */

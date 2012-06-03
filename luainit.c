@@ -15,7 +15,7 @@ static const luaL_Reg loadedlibs[] = {
 	{LUA_LOADLIBNAME, luaopen_package},
 	{LUA_COLIBNAME, luaopen_coroutine},
 	{LUA_TABLIBNAME, luaopen_table},
-// TODO	{LUA_IOLIBNAME, luaopen_io},
+	{LUA_IOLIBNAME, luaopen_iolight},
 	{LUA_STRLIBNAME, luaopen_string},
 	{LUA_BITLIBNAME, luaopen_bit32},
 	{LUA_MATHLIBNAME, luaopen_math},

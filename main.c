@@ -15,6 +15,8 @@ static void test_lua(void)
 {
 	lua_State *L;
 	
+	// /patchpool/nil - Cid and Lucy.fnp
+	
 	L = luaL_newstate();
 	luaL_openlibs(L);
 	luaL_dostring(L, "for i=10,1,-1 do print(i) end\n");

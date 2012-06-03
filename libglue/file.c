@@ -226,7 +226,7 @@ int fflush(FILE *stream)
 
 char *fgets(char *s, int size, FILE *stream)
 {
-	return NULL;
+	return NULL; /* TODO */
 }
 
 size_t fread(void *ptr, size_t size, size_t nmemb, FILE *stream)
@@ -300,12 +300,23 @@ int fputc(int c, FILE *stream)
 
 int ferror(FILE *stream)
 {
-	return 0; /* TODO */
+	return 0;
 }
 
 int feof(FILE *stream)
 {
-	return 0; /* TODO */
+	int fd;
+	loff_t position;
+	loff_t end;
+	
+	if(is_std_stream(stream))
+		return 1;
+	
+	fd = *(int *)stream;
+	position = yaffs_lseek(fd, 0, SEEK_CUR);
+	end = yaffs_lseek(fd, 0, SEEK_END);
+	yaffs_lseek(fd, position, SEEK_SET);
+	return position == end;
 }
 
 FILE *freopen(const char *path, const char *mode, FILE *stream)
@@ -324,4 +335,26 @@ FILE *freopen(const char *path, const char *mode, FILE *stream)
 	*(int *)stream = *(int *)newfd;
 	free(newfd);
 	return stream;
+}
+
+int fseek(FILE *stream, long offset, int whence)
+{
+	int fd;
+	
+	if(is_std_stream(stream))
+		return -1;
+	fd = *(int *)stream;
+	if(yaffs_lseek(fd, offset, whence) < 0)
+		return -1;
+	return 0;
+}
+
+long ftell(FILE *stream)
+{
+	int fd;
+	
+	if(is_std_stream(stream))
+		return -1;
+	fd = *(int *)stream;
+	return yaffs_lseek(fd, 0, SEEK_CUR);
 }

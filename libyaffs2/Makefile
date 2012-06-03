@@ -1,7 +1,8 @@
 MISPDIR=..
 include $(MISPDIR)/common.mak
 
-CFLAGS+=-include $(M2DIR)/software/include/base/errno.h -include $(YAFFSDIR)/direct/yportenv.h -I$(YAFFSDIR)/direct -I$(YAFFSDIR)
+CFLAGS+=-include $(M2DIR)/software/include/base/errno.h -include $(M2DIR)/software/include/base/stdio.h
+CFLAGS+=-include $(YAFFSDIR)/direct/yportenv.h -I$(YAFFSDIR)/direct -I$(YAFFSDIR)
 CFLAGS+=-DCONFIG_YAFFS_DIRECT -DCONFIG_YAFFS_DEFINES_TYPES -DCONFIG_YAFFS_PROVIDE_DEFS -DCONFIG_YAFFSFS_PROVIDE_VALUES
 
 OBJECTS=yaffs_ecc.o yaffs_guts.o yaffs_packedtags1.o yaffs_tagscompat.o yaffs_packedtags2.o yaffs_nand.o yaffs_checkptrw.o yaffs_nameval.o yaffs_attribs.o yaffs_allocator.o yaffs_bitmap.o yaffs_yaffs1.o yaffs_yaffs2.o yaffs_verify.o yaffs_summary.o
