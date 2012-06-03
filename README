@@ -1,0 +1,44 @@
+[> Milkymist Software Platform
+------------------------------
+
+
+[> Instructions
+---------------
+1. Follow software instructions from milkymist-ng.
+   libbase must be built.
+
+2. Download source code of external libs and set environment variables
+   to the root of each source distribution, as follows:
+     M2DIR          milkymist-ng      http://milkymist.org
+     LUADIR         Lua (5.2.0)       http://www.lua.org/
+     YAFFSDIR       YAFFS             http://www.yaffs.net/
+   The CRTDIR environment variable is still needed (and is the only one
+   which should not point to the root of the source distribution, but to
+   where the .a binary is located)
+
+3. Type make to compile everything (including libraries).
+
+4. Run the generated misp.bin.
+
+[> Misc
+-------
+Code repository:
+  https://github.com/milkymist/misp
+
+Send questions, comments and patches to devel [AT] lists.milkymist.org
+We are also on IRC: #milkymist on the Freenode network.
+
+MISP is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the
+Free Software Foundation, version 3 of the License. This program is
+distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+Unless otherwise noted, MISP's source code is copyright (C)
+2012 Sebastien Bourdeauducq. Other authors retain ownership of their
+contributions. If a submission can reasonably be considered independently
+copyrightable, it's yours and I encourage you to claim it with
+appropriate copyright notices. This submission then falls under the
+"otherwise noted" category. All submissions must use a license compatible
+with the GPL and the additional permissions above.
