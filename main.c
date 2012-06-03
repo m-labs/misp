@@ -11,15 +11,20 @@
 #include <lauxlib.h>
 #include <lualib.h>
 
+//#define TEST_BASIC
+//#define TEST_DIR
+#define TEST_FILE
+
 static void test_lua(void)
 {
 	lua_State *L;
 	
-	// /patchpool/nil - Cid and Lucy.fnp
-	
 	L = luaL_newstate();
 	luaL_openlibs(L);
+#ifdef TEST_BASIC
 	luaL_dostring(L, "for i=10,1,-1 do print(i) end\n");
+#endif
+#ifdef TEST_DIR
 	luaL_dostring(L, "function attrdir (path)\n"
 "    for file in lfs.dir(path) do\n"
 "        if file ~= \".\" and file ~= \"..\" then\n"
@@ -39,6 +44,13 @@ static void test_lua(void)
 "end\n"
 "\n"
 "attrdir (\"/\")\n");
+#endif
+#ifdef TEST_FILE
+	luaL_dostring(L, "f = assert(io.open(\"/patchpool/nil - Cid and Lucy.fnp\"))\n"
+		"t = f:read(\"*all\")\n"
+		"print(t)\n"
+		"f:close()\n");
+#endif
 	lua_close(L);
 }
 
