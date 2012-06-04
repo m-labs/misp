@@ -1,7 +1,7 @@
 MISPDIR=..
 include $(MISPDIR)/common.mak
 
-CFLAGS+=-I$(FTDIR)/include -include $(FTDIR)/include/freetype/internal/internal.h
+CFLAGS+=-Iinclude -I$(FTDIR)/include -include $(FTDIR)/include/freetype/internal/internal.h
 
 FTSRC=$(FTDIR)/src
 
