@@ -10,8 +10,9 @@
 2. Download source code of external libs and set environment variables
    to the root of each source distribution, as follows:
      M2DIR          milkymist-ng      http://milkymist.org
-     LUADIR         Lua (5.2.0)       http://www.lua.org/
-     YAFFSDIR       YAFFS             http://www.yaffs.net/
+     LUADIR         Lua (5.2.0)       http://lua.org
+     YAFFSDIR       YAFFS             http://yaffs.net
+     FTDIR          Freetype (2.4.9)  http://freetype.org
    The CRTDIR environment variable is still needed (and is the only one
    which should not point to the root of the source distribution, but to
    where the .a binary is located)

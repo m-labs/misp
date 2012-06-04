@@ -2,7 +2,7 @@ MISPDIR=.
 include $(MISPDIR)/common.mak
 
 OBJECTS=crt0.o isr.o luainit.o main.o
-OURLIBS=m mm yaffs2 glue lua lfs
+OURLIBS=m mm yaffs2 glue lua lfs freetype
 
 CFLAGS+=-I$(MISPDIR)/libm/include -I$(MISPDIR)/libmm/include -I$(MISPDIR)/libglue/include -I$(LUADIR)/src -I$(MISPDIR)/liblfs/include
 
