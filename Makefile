@@ -20,9 +20,9 @@ misp.elf: linker.ld $(OBJECTS) libs
 %.elf:
 	$(LD) $(LDFLAGS) -T $< -N -o $@ $(OBJECTS) \
 		-L$(M2DIR)/software/libbase \
-		-L$(CRTDIR) \
+		-L$(M2DIR)/software/libcompiler-rt \
 		$(addprefix -L$(MISPDIR)/lib,$(OURLIBS)) \
-		--start-group -lbase -lcompiler_rt $(addprefix -l,$(OURLIBS)) --end-group
+		--start-group -lbase -lcompiler-rt $(addprefix -l,$(OURLIBS)) --end-group
 	chmod -x $@
 
 %.o: %.c
