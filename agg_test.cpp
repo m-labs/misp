@@ -72,7 +72,7 @@ void agg_test(void)
     agg::rendering_buffer rbuf(buf, width, height, width * 4);
 
     // Create the renderer and the rasterizer
-    agg::renderer<agg::span_rgba32> ren(rbuf);
+    agg::renderer<agg::span_rgb101010> ren(rbuf);
     agg::rasterizer ras;
 
     // Setup the rasterizer
@@ -138,4 +138,3 @@ void agg_test(void)
 
     delete [] buf;
 }
-

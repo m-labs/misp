@@ -1262,8 +1262,60 @@ namespace agg
     };
 
 
-}
 
+    //========================================================================
+    struct span_rgb101010
+    {
+        //--------------------------------------------------------------------
+        static void render(unsigned char* ptr, 
+                           int x,
+                           unsigned count, 
+                           const unsigned char* covers, 
+                           const rgba8& c)
+        {
+            unsigned int* p = (unsigned int *)ptr + x;
+            do
+            {
+                int alpha = (*covers++) * c.a;
+                int r = (*p >> 20) & 0x3ff;
+                int g = (*p >> 10) & 0x3ff;
+                int b = *p & 0x3ff;
+                int cr = c.r << 2;
+                int cg = c.g << 2;
+                int cb = c.b << 2;
+                int dr = (((cr - r) * alpha) + (r << 16)) >> 16;
+                int dg = (((cg - g) * alpha) + (g << 16)) >> 16;
+                int db = (((cb - b) * alpha) + (b << 16)) >> 16;
+                *p++ = (dr << 20) | (dg << 10) | db;
+            }
+            while(--count);
+        }
+
+        //--------------------------------------------------------------------
+        static void hline(unsigned char* ptr, 
+                          int x,
+                          unsigned count, 
+                          const rgba8& c)
+        {
+            unsigned int* p = (unsigned int *)ptr + x;
+            unsigned int c10 = (c.r << 22) | (c.g << 12) | (c.b << 2);
+            do { *p++ = c10; } while(--count);
+        }
+
+        //--------------------------------------------------------------------
+        static rgba8 get(unsigned char* ptr, int x)
+        {
+            unsigned int* p = (unsigned int *)ptr + x;
+            rgba8 c;
+            c.r = (*p >> 22) & 0xff;
+            c.g = (*p >> 12) & 0xff;
+            c.b = (*p >> 2) & 0xff;
+            c.a = 255;
+            return c;
+        }
+    };
+
+}
 
 
 #endif
