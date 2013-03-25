@@ -56,6 +56,8 @@ static void test_lua(void)
 
 extern void *_heapstart;
 
+extern void agg_test(void);
+
 int main()
 {
 	irq_setmask(0);
@@ -66,6 +68,7 @@ int main()
 	
 	printf("Hello World\n");
 	test_lua();
+	agg_test();
 	
 	while(1);
 	

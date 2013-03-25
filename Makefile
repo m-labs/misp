@@ -1,10 +1,12 @@
 MISPDIR=.
 include $(MISPDIR)/common.mak
 
-OBJECTS=crt0.o isr.o luainit.o main.o
-OURLIBS=m mm yaffs2 glue lua lfs freetype
+OBJECTS=crt0.o isr.o luainit.o agg_test.o main.o
+OURLIBS=m mm yaffs2 glue lua lfs agl
 
-CFLAGS+=-I$(MISPDIR)/libm/include -I$(MISPDIR)/libmm/include -I$(MISPDIR)/libglue/include -I$(LUADIR)/src -I$(MISPDIR)/liblfs/include
+INCFLAGS=-I$(MISPDIR)/libm/include -I$(MISPDIR)/libmm/include -I$(MISPDIR)/libglue/include -I$(LUADIR)/src -I$(MISPDIR)/liblfs/include -I$(MISPDIR)/libagl/include
+CFLAGS+=$(INCFLAGS)
+CXXFLAGS+=$(INCFLAGS)
 
 all: misp.bin
 
@@ -25,8 +27,12 @@ misp.elf: linker.ld $(OBJECTS) libs
 		--start-group -lbase -lcompiler-rt $(addprefix -l,$(OURLIBS)) --end-group
 	chmod -x $@
 
+%.o: %.cpp
+	$(compilexx-dep)
+
 %.o: %.c
 	$(compile-dep)
+
 
 libs:
 	set -e; \
