@@ -13,6 +13,10 @@
 #ifndef __MATH_H
 #define __MATH_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* Sometimes it's necessary to define __LITTLE_ENDIAN explicitly
    but these catch some common cases. */
 
@@ -218,5 +222,9 @@ extern double __kernel_sin __P((double,double,int));
 extern double __kernel_cos __P((double,double));
 extern double __kernel_tan __P((double,double,int));
 extern int    __kernel_rem_pio2 __P((double*,double*,int,int,int,const int*));
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __MATH_H */
