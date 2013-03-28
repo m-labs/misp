@@ -2,12 +2,13 @@
 #include <stdio.h>
 #include <math.h>
 #include <hw/csr.h>
+#include <hw/flags.h>
 #include "agg.h"
 
 enum
 {
-    width  = 640,
-    height = 480
+    width  = 1024,
+    height = 768
 };
 
 
@@ -54,8 +55,91 @@ void draw_line(agg::rasterizer& ras,
     ras.line_to_d(x1 + dx,  y1 - dy);
 }
 
+enum {
+    VGA_MODE_640_480,
+    VGA_MODE_800_600,
+    VGA_MODE_1024_768
+};
+
+static void vga_clkgen_write(int cmd, int data)
+{
+    int word;
+
+    word = (data << 2) | cmd;
+    crg_cmd_data_write(word);
+    crg_send_cmd_data_write(1);
+    while(crg_status_read() & CLKGEN_STATUS_BUSY);
+}
+
+/* http://web.mit.edu/6.111/www/s2004/NEWKIT/vga.shtml */
+static void vga_set_mode(int mode)
+{
+    int vga_hres, vga_vres;
+    int clock_m, clock_d;
+
+    switch(mode) {
+        default:
+        case VGA_MODE_640_480: // Pixel clock: 25MHz
+            vga_hres = 640;
+            vga_vres = 480;
+            clock_m = 2;
+            clock_d = 4;
+            fb_hres_write(640);
+            fb_hsync_start_write(656);
+            fb_hsync_end_write(752);
+            fb_hscan_write(799);
+            fb_vres_write(480);
+            fb_vsync_start_write(492);
+            fb_vsync_end_write(494);
+            fb_vscan_write(524);
+            break;
+        case VGA_MODE_800_600: // Pixel clock: 50MHz
+            vga_hres = 800;
+            vga_vres = 600;
+            clock_m = 2;
+            clock_d = 2;
+            fb_hres_write(800);
+            fb_hsync_start_write(848);
+            fb_hsync_end_write(976);
+            fb_hscan_write(1040);
+            fb_vres_write(600);
+            fb_vsync_start_write(636);
+            fb_vsync_end_write(642);
+            fb_vscan_write(665);
+            break;
+        case VGA_MODE_1024_768: // Pixel clock: 65MHz
+            vga_hres = 1024;
+            vga_vres = 768;
+            clock_m = 13;
+            clock_d = 10;
+            fb_hres_write(1024);
+            fb_hsync_start_write(1048);
+            fb_hsync_end_write(1184);
+            fb_hscan_write(1344);
+            fb_vres_write(768);
+            fb_vsync_start_write(772);
+            fb_vsync_end_write(778);
+            fb_vscan_write(807);
+            break;
+    }
+    fb_length_write(vga_hres*vga_vres*4);
+
+    vga_clkgen_write(0x1, clock_d-1);
+    vga_clkgen_write(0x3, clock_m-1);
+    crg_send_go_write(1);
+    printf("waiting for PROGDONE...");
+    while(!(crg_status_read() & CLKGEN_STATUS_PROGDONE));
+    printf("ok\n");
+    printf("waiting for LOCKED...");
+    while(!(crg_status_read() & CLKGEN_STATUS_LOCKED));
+    printf("ok\n");
+
+    printf("VGA: mode set to %dx%d\n", vga_hres, vga_vres);
+}
+
 static void start_fb(unsigned char *addr)
 {
+    vga_set_mode(VGA_MODE_1024_768);
     fb_base_write((unsigned int)addr);
     fb_enable_write(1);
 }
