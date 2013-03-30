@@ -58,7 +58,8 @@ void draw_line(agg::rasterizer& ras,
 enum {
     VGA_MODE_640_480,
     VGA_MODE_800_600,
-    VGA_MODE_1024_768
+    VGA_MODE_1024_768,
+    VGA_MODE_1920_1080
 };
 
 static void vga_clkgen_write(int cmd, int data)
@@ -87,11 +88,11 @@ static void vga_set_mode(int mode)
             fb_hres_write(640);
             fb_hsync_start_write(656);
             fb_hsync_end_write(752);
-            fb_hscan_write(799);
+            fb_hscan_write(800);
             fb_vres_write(480);
             fb_vsync_start_write(492);
             fb_vsync_end_write(494);
-            fb_vscan_write(524);
+            fb_vscan_write(525);
             break;
         case VGA_MODE_800_600: // Pixel clock: 50MHz
             vga_hres = 800;
@@ -120,6 +121,20 @@ static void vga_set_mode(int mode)
             fb_vsync_start_write(772);
             fb_vsync_end_write(778);
             fb_vscan_write(807);
+            break;
+        case VGA_MODE_1920_1080: // Pixel clock: 148MHz
+            vga_hres = 1920;
+            vga_vres = 1080;
+            clock_m = 74;
+            clock_d = 25;
+            fb_hres_write(1920);
+            fb_hsync_start_write(2008);
+            fb_hsync_end_write(2052);
+            fb_hscan_write(2200);
+            fb_vres_write(1080);
+            fb_vsync_start_write(1084);
+            fb_vsync_end_write(1089);
+            fb_vscan_write(1125);
             break;
     }
     fb_length_write(vga_hres*vga_vres*4);
