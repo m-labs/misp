@@ -69,6 +69,8 @@ void yaffs_bug_fn(const char *file_name, int line_no)
 #define NOR_CHUNK_TAGS_SIZE	16
 #define NOR_CHUNK_WHOLE_SIZE	(NOR_CHUNK_DATA_SIZE+NOR_CHUNK_TAGS_SIZE)
 
+#define FLASH_OFFSET_FILESYSTEM (FLASH_OFFSET_APP + 1024*1024*2)
+
 static void read_flash(void *data, int len, int offset)
 {
 	memcpy(data, (char *)(0x80000000 | FLASH_OFFSET_FILESYSTEM) + offset, len);

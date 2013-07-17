@@ -1,7 +1,7 @@
 MISPDIR=.
 include $(MISPDIR)/common.mak
 
-OBJECTS=crt0.o isr.o luainit.o agg_test.o main.o
+OBJECTS=isr.o luainit.o agg_test.o main.o
 OURLIBS=m mm yaffs2 glue lua lfs agl
 
 INCFLAGS=-I$(MISPDIR)/libm/include -I$(MISPDIR)/libmm/include -I$(MISPDIR)/libglue/include -I$(LUADIR)/src -I$(MISPDIR)/liblfs/include -I$(MISPDIR)/libagl/include
@@ -17,10 +17,14 @@ all: misp.bin
 	$(OBJCOPY) -O binary $< $@
 	chmod -x $@
 
-misp.elf: linker.ld $(OBJECTS) libs
+misp.elf: $(OBJECTS) libs
 
 %.elf:
-	$(LD) $(LDFLAGS) -T $< -N -o $@ $(OBJECTS) \
+	$(LD) $(LDFLAGS) \
+		-T $(M2DIR)/software/libbase/linker-sdram.ld \
+		-N -o $@ \
+		$(M2DIR)/software/libbase/crt0.o \
+		$(OBJECTS) \
 		-L$(M2DIR)/software/libbase \
 		-L$(M2DIR)/software/libcompiler-rt \
 		$(addprefix -L$(MISPDIR)/lib,$(OURLIBS)) \
@@ -47,6 +51,6 @@ clean:
 	done
 
 netboot: misp.bin
-	cp misp.bin /var/lib/tftpboot/boot.bin
+	cp misp.bin /srv/tftp/boot.bin
 
 .PHONY: clean libs netboot

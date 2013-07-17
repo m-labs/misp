@@ -7,8 +7,8 @@
 
 enum
 {
-    width  = 1024,
-    height = 768
+    width  = 1920,
+    height = 1080
 };
 
 
@@ -154,7 +154,7 @@ static void vga_set_mode(int mode)
 
 static void start_fb(unsigned char *addr)
 {
-    vga_set_mode(VGA_MODE_1024_768);
+    vga_set_mode(VGA_MODE_1920_1080);
     fb_base_write((unsigned int)addr);
     fb_enable_write(1);
 }
